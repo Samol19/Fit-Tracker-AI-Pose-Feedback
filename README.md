@@ -1,4 +1,4 @@
-# Fit Tracker AI: Sistema de Monitoreo y Corrección de Ejercicios Físicos en Tiempo Real Basado en Visión Computacional e Inteligencia Artificial
+# Fit Tracker AI: Aplicación móvil con inteligencia artificial para guiar y monitorear rutinas de acondicionamiento físico en adultos jóvenes de Lima Metropolitana.
 
 ![Estado del Proyecto](https://img.shields.io/badge/Estado-En_Desarrollo-yellow)
 ![Licencia](https://img.shields.io/badge/Licencia-MIT-blue)
