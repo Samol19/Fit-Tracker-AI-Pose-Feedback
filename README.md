@@ -2,6 +2,9 @@
 
 ![Estado del Proyecto](https://img.shields.io/badge/Estado-En_Desarrollo-yellow)
 ![Licencia](https://img.shields.io/badge/Licencia-MIT-blue)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-Solutions-4285F4?logo=google&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?logo=Flutter&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?logo=scikit-learn&logoColor=white)
 ![Versión](https://img.shields.io/badge/Versión-1.0.0-green)
 
 ## Resumen del Proyecto
