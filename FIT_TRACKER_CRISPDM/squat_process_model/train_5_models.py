@@ -11,7 +11,7 @@ from sklearn.metrics import classification_report, accuracy_score, confusion_mat
 from sklearn.utils.class_weight import compute_sample_weight # Importante
 from sklearn.pipeline import Pipeline # Importante para MLP
 
-# --- Importar Modelos ---
+#Importar Modelos
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
@@ -21,7 +21,7 @@ from lightgbm import LGBMClassifier
 # Configuración
 EXERCISE_NAME = 'squat'
 
-# --- Variables Globales de Rutas ---
+#Variables Globales de Ruta
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 DATASET_FILE = os.path.join(BASE_PATH, f'{EXERCISE_NAME}_training_dataset.csv')
 OUTPUT_DIR = os.path.join(BASE_PATH, f'training_results_{EXERCISE_NAME}')
@@ -143,14 +143,13 @@ def plot_feature_importance(model_name, model, feature_names):
     plt.close()
     print(f"    Gráfico Importancia de Características guardado.")
 
-# --- Funciones de Entrenamiento ---
+#Funciones de Entrenamiento
 
 def train_random_forest(X_train, y_train, X_test, y_test, le):
     """Entrena, evalúa y guarda el RF usando class_weight.""" 
     print("\n1. Entrenando Random Forest (Modelo Principal)")
     model_name = 'RandomForest (Bal)'
-    
-    # Los árboles no son sensibles a la escala, no se necesita Pipeline
+
     
     param_grid = {
         'n_estimators': [100, 200],
@@ -159,7 +158,7 @@ def train_random_forest(X_train, y_train, X_test, y_test, le):
         'criterion': ['gini', 'entropy']
     }
     
-    rf = RandomForestClassifier(random_state=42, class_weight='balanced') # <-- AQUÍ
+    rf = RandomForestClassifier(random_state=42, class_weight='balanced')
     
     start_time = time.time()
     grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, scoring='accuracy', verbose=1)
@@ -176,13 +175,12 @@ def train_random_forest(X_train, y_train, X_test, y_test, le):
     metrics = save_metrics(model_name, y_test, y_pred, train_time, infer_time, le)
     plot_confusion_matrix(model_name, y_test, y_pred, le)
     plot_feature_importance(model_name, best_rf, X_train.columns)
-    
-    # --- ¡GUARDAR EL MODELO PRINCIPAL! ---
+    # Guardar modelo principal
     model_path = os.path.join(MODEL_DIR, f'{EXERCISE_NAME}_model_rf.joblib')
     joblib.dump(best_rf, model_path)
     print(f"  ¡Modelo principal guardado en: {model_path}!")
     
-    # Guardar también el scaler (aunque RF no lo usa, se necesita para el pipeline de inferencia)
+    # Guardar también el scaler
     scaler = StandardScaler().fit(X_train)
     scaler_path = os.path.join(MODEL_DIR, f'{EXERCISE_NAME}_scaler.pkl')
     joblib.dump(scaler, scaler_path)
@@ -201,12 +199,12 @@ def train_gaussian_nb(X_train, y_train, X_test, y_test, le):
     X_test_scaled = scaler.transform(X_test)
 
     # GNB no tiene 'class_weight', así que calculamos pesos manualmente
-    sample_weights = compute_sample_weight(class_weight='balanced', y=y_train) # <-- AQUÍ
+    sample_weights = compute_sample_weight(class_weight='balanced', y=y_train)
     
     model = GaussianNB()
     
     start_time = time.time()
-    model.fit(X_train_scaled, y_train, sample_weight=sample_weights) # <-- AQUÍ
+    model.fit(X_train_scaled, y_train, sample_weight=sample_weights)
     train_time = time.time() - start_time
     
     start_time = time.time()
@@ -237,7 +235,7 @@ def train_mlp(X_train, y_train, X_test, y_test, le):
                            validation_fraction=0.1)
     
     start_time = time.time()
-    model.fit(X_train_scaled, y_train, sample_weight=sample_weights) # <-- AQUÍ
+    model.fit(X_train_scaled, y_train, sample_weight=sample_weights) 
     train_time = time.time() - start_time
     
     start_time = time.time()
@@ -255,12 +253,12 @@ def train_xgboost(X_train, y_train, X_test, y_test, le):
     print("\n4. Entrenando XGBoost (Ensamblador)")
     model_name = 'XGBoost (Bal)'
     
-    sample_weights = compute_sample_weight(class_weight='balanced', y=y_train) # <-- AQUÍ
+    sample_weights = compute_sample_weight(class_weight='balanced', y=y_train)
     
     model = XGBClassifier(random_state=42, use_label_encoder=False, eval_metric='mlogloss')
     
     start_time = time.time()
-    model.fit(X_train, y_train, sample_weight=sample_weights) # <-- AQUÍ
+    model.fit(X_train, y_train, sample_weight=sample_weights) 
     train_time = time.time() - start_time
     
     start_time = time.time()
@@ -278,7 +276,7 @@ def train_lightgbm(X_train, y_train, X_test, y_test, le):
     print("\n5. Entrenando LightGBM (Ensamblador)")
     model_name = 'LightGBM (Bal)'
     
-    model = LGBMClassifier(random_state=42, class_weight='balanced', verbosity=-1) # <-- AQUÍ
+    model = LGBMClassifier(random_state=42, class_weight='balanced', verbosity=-1)
     
     start_time = time.time()
     model.fit(X_train, y_train) # Entrenar con datos originales
@@ -306,7 +304,6 @@ def main():
         return
         
     # Entrenar y evaluar modelos
-    # Todos los modelos se entrenan con datos originales (X_train, y_train)
     # El balanceo se maneja internamente en cada función
     all_model_results.append(train_random_forest(X_train, y_train, X_test, y_test, le))
     all_model_results.append(train_gaussian_nb(X_train, y_train, X_test, y_test, le))
