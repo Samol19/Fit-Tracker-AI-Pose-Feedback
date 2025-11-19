@@ -66,9 +66,9 @@ La organización del código fuente se distribuye de la siguiente manera:
 
 ```text
 Fit-Tracker-AI/
-├── API/                 # Implementación de los modelos en un API
+├── API/                 # Implementación de la API con FastAPI y WebSockets
 ├── FIT_TRACKER_CRISPDM/
-│   ├── dataset/             # Implementación de la API con FastAPI y WebSockets
+│   ├── dataset/             # CSV crudos y procesados del conjunto de datos
 │   ├── models/          # Artefactos serializados (.pkl) listos para producción
 │   ├── process_model/        # Scripts de entrenamiento y validación (CRISP-DM)
 │   └── visualizations/   # Gráficas del analisis EDA y resultados
