@@ -66,10 +66,10 @@ La organización del código fuente se distribuye de la siguiente manera:
 
 ```text
 Fit-Tracker-AI/
-├── app/                 # Código fuente de la aplicación móvil (Flutter)
-├── backend/
-│   ├── api/             # Implementación de la API con FastAPI y WebSockets
-│   ├── models/          # Artefactos serializados (.joblib, .pkl) listos para producción
-│   ├── training/        # Scripts de entrenamiento y validación (CRISP-DM)
-│   └── preprocessing/   # Módulos de extracción de características biomecánicas
-└── docker/              # Archivos de configuración para contenerización (Dockerfile, docker-compose)
+├── API/                 # Implementación de los modelos en un API
+├── FIT_TRACKER_CRISPDM/
+│   ├── dataset/             # Implementación de la API con FastAPI y WebSockets
+│   ├── models/          # Artefactos serializados (.pkl) listos para producción
+│   ├── process_model/        # Scripts de entrenamiento y validación (CRISP-DM)
+│   └── visualizations/   # Gráficas del analisis EDA y resultados
+└── real_time_feedback   # Prototipo funcional de implementación en tiempo real de los modelos
